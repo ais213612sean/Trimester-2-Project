@@ -1,0 +1,56 @@
+<html>
+<head>
+<title> Instruction </title>
+<script src="processing-1.4.1.js"></script>
+<script type="text/processing" data-processing-target="mycanvas">
+
+/* @pjs globalKeyEvents = "true"; */
+
+PImage wallpaper;
+PFont starcraft;
+
+void setup()
+{  
+		size(600, 800);  
+		background(0,0,0);
+		frameRate( 30 );
+		wallpaper = loadImage("images/instruction.png");
+      starcraft = loadFont("Starcraft");
+
+}  
+
+void draw()
+{    
+
+  background(0,0,0);
+ 
+   image(wallpaper,0,0,600,800);
+textFont(starcraft,30);
+
+
+
+fill(255,255,255);
+  text("Press Spacebar to Start Game",90,650);
+ 
+}
+
+void keyPressed()
+{
+
+if(key == ' ')
+  {
+     link("game screen.html");
+  }
+
+}
+
+
+
+</script>
+<canvas id="mycanvas"></canvas>
+</head>
+
+<body>
+
+</body>
+</html>

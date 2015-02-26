@@ -1,0 +1,904 @@
+<title> game screen </title>
+
+<!-- copy and paste the next 2 lines to setup the sound files, you must modify the loadsoundchrome.js file with your sounds -->
+<script type="text/javascript" src="script/soundmanager2.js"></script>
+<script type="text/javascript" src="script/loadsoundchrome.js"></script>
+<!-- Stop copying here -->
+
+<center>
+    <script type="text/javascript" src="script/processing-1.4.1.js"></script>
+    <script type="text/processing" data-processing-target="mycanvas">
+
+/* @pjs globalKeyEvents = "true"; */
+
+
+PImage galaxy;
+PImage galaxy2;
+PImage shot;
+PImage shot2;
+PImage shot3;
+PImage shot4;
+PImage shot5;
+PImage mainSpaceship;
+PImage e1Red;
+PImage e1Red3;
+PImage whiteEnemy;
+PImage explode;
+starcraft = loadFont("Starcraft");
+int characterX;
+int characterY;
+int characterspeed;
+int moveRight;
+int moveLeft;
+int moveUp;
+int moveDown;
+int shotX;
+int shotY;
+int shotX2;
+int shotY2;
+int shotX3;
+int shotY3;
+int shotX4;
+int shotY4;
+int shotX5;
+int shotY5;
+int shotPosition;
+int shotPosition2;
+int shotPosition3;
+int shotPosition4;
+int shotPosition5;
+int e1RedX;
+int e1RedY;
+int whiteEnemyX;
+int e1RedY2;
+int firstgalaxypictureX;
+int firstgalaxypictureY;
+int secondGalaxyPictureX;
+int secondGalaxyPictureY;
+int turn;
+int d;
+int d2;
+int d3;
+int d4;
+int exploding;
+int explodeX;
+int explodeY;
+int explodeXsize;
+int explodeYsize;
+int exploding2;
+int explodeX2;
+int explodeY2;
+int explodeXsize2;
+int explodeYsize2;
+int numberDestroyed;
+int enemy1speed;
+int enemy2speed;
+int exploding4;
+int explodeX4;
+int explodeY4;
+int explodeXsize4;
+int explodeYsize4;
+
+
+
+int exploding5;
+int explodeX5;
+int explodeY5;
+int explodeXsize5;
+int explodeYsize5;
+
+int exploding6;
+int explodeX6;
+int explodeY6;
+int explodeXsize6;
+int explodeYsize6;
+
+
+
+///enemy 3
+int e1RedX3;
+int e1RedY3;
+int d5;
+int d6;
+int d7;
+int d8;
+int d9;
+int d10;
+int d11;
+int d12;
+int d13;
+int d14;
+int d15;
+int d16;
+int d17;
+int d18;
+
+int explodeX3;
+int explodeY3;
+int explodeXsize3;
+int explodeYsize3;
+int enemy3speed;
+int exploding3;
+
+
+float a;
+
+int music;
+int musicControl;
+
+
+
+void setup()
+{  
+		size(600, 800);  
+		background(0,0,0);
+		frameRate(30);
+		galaxy = loadImage("images/galaxy.jpg");
+		galaxy2 = loadImage("images/galaxy.jpg");	
+		character = loadImage("images/mainSpaceship.png");
+		shot = loadImage("images/shot.png");
+		shot2 = loadImage("images/shot.png");
+		shot3 = loadImage("images/shot.png");
+		shot4 = loadImage("images/shot.png");
+		shot5 = loadImage("images/shot.png");
+		e1Red = loadImage("images/enemy1.png");
+		e1Red3 = loadImage("images/enemy1.png");
+		whiteEnemy = loadImage("images/enemy2.png");
+		explode = loadImage("images/explode.png");
+		characterY = 600;
+		characterX = 100;
+		characterspeed = 15;
+		moveRight = 0;
+		moveLeft = 0;
+		moveUp = 0;
+		moveDown = 0;
+		shotPosition = 0;
+		e1RedX = 200;
+		e1RedY = -30;
+		whiteEnemyX = 350;
+		e1RedY2 = 70;
+		firstgalaxypictureX = 0;
+		firstgalaxypictureY = 0;
+		secondGalaxyPictureX = 0;
+		secondGalaxyPictureY = 800;
+		turn = 1;
+		a = 0;
+		exploding = 0;
+		numberDestroyed = 0;
+		enemy1speed = 4;
+		enemy2speed = 4;
+		explodeX = -200;
+		explodeY = -300;
+		explodeXsize = 150;
+		explodeYsize = 170;
+		exploding2 = 0;
+		explodeX2 = -200;
+		explodeY2 = -300;
+		explodeXsize2 = 150;
+		explodeYsize2 = 170;
+		music = 0;
+		musicControl = 0;
+		
+//// enemy3///
+	e1RedX3 = 100;
+	e1RedY3 = -20;
+	explodeX3 = -200;
+	explodeY3 = -300;
+	explodeXsize3 = 150;
+	explodeYsize3 = 170;
+	enemy3speed = 4;
+	exploding3 = 0;
+/// character burst
+	explodeX4 = -200;
+	explodeY4 = -300;
+	explodeXsize4 = 150;
+	explodeYsize4 = 170;
+	exploding4 = 0;
+
+	explodeX5 = -200;
+	explodeY5 = -300;
+	explodeXsize5 = 150;
+	explodeYsize5 = 170;
+	exploding5 = 0;
+
+	explodeX6 = -200;
+	explodeY6 = -300;
+	explodeXsize6 = 150;
+	explodeYsize6 = 170;
+	exploding6 = 0;
+}  
+
+void draw()
+{
+	background(0,0,0);
+	image(galaxy,firstgalaxypictureX,firstgalaxypictureY,600,800);
+	image(galaxy2,secondGalaxyPictureX,secondGalaxyPictureY,600,800);
+	image(explode,explodeX,explodeY,explodeXsize,explodeYsize);
+	image(explode,explodeX2,explodeY2,explodeXsize2,explodeYsize2);
+	image(explode,explodeX3,explodeY3,explodeXsize3,explodeYsize3);
+	image(explode,explodeX4,explodeY4,explodeXsize4,explodeYsize4);
+	image(explode,explodeX5,explodeY5,explodeXsize5,explodeYsize5);
+	image(explode,explodeX6,explodeY6,explodeXsize6,explodeYsize6);
+
+	image(character,characterX,characterY,100,150);
+
+
+if (music == 0)
+{
+	soundManager.play('s0');
+	musicControl = 1;
+}
+
+if ( musicControl == 1)
+{ 
+	music = 1;
+}
+
+
+//enemy 1 	
+	image(e1Red,e1RedX,e1RedY,100,150);	
+	a = a + PI/20;
+	e1RedY = e1RedY + enemy1speed;
+	e1RedX = e1RedX + 7*sin(a/2);
+// enemy 2
+	image(whiteEnemy,whiteEnemyX,e1RedY2,150,100);	
+	a = a + PI/20;
+	e1RedY2 = e1RedY2 + enemy2speed;
+	whiteEnemyX = whiteEnemyX + 5*sin(a/2);
+//  enemy 3
+	image(e1Red3,e1RedX3,e1RedY3,100,150);	
+	a = a + PI/20;
+	e1RedY3 = e1RedY3 + enemy3speed;
+	e1RedX3 = e1RedX3 + 6*sin(a/2);
+
+// Explosion related Distance
+ 	d = (int)sqrt(sq(e1RedX-shotX)+sq(e1RedY-shotY));
+
+	d2 = (int)sqrt(sq(whiteEnemyX + 40-shotX)+sq(e1RedY2 + 20-shotY));
+
+    d3 = (int)sqrt(sq(e1RedX-characterX)+sq(e1RedY-characterY));
+
+    d4 = (int)sqrt(sq(whiteEnemyX-characterX)+sq(e1RedY2-characterY));
+
+    d5 = (int)sqrt(sq(e1RedX3 -shotX)+sq(e1RedY3 -shotY));
+
+    d6 = (int)sqrt(sq(e1RedX3 -characterX)+sq(e1RedY3 -characterY));
+
+	d7 = (int)sqrt(sq(e1RedX-shotX2)+sq(e1RedY-shotY2));
+
+	d8 = (int)sqrt(sq(whiteEnemyX + 40-shotX2)+sq(e1RedY2 + 20-shotY2));
+
+	d9 = (int)sqrt(sq(e1RedX3 -shotX2)+sq(e1RedY3 -shotY2));
+
+	d10 = (int)sqrt(sq(e1RedX-shotX3)+sq(e1RedY-shotY3));
+
+	d11 = (int)sqrt(sq(whiteEnemyX + 40-shotX3)+sq(e1RedY2 + 20-shotY3));
+
+	d12 = (int)sqrt(sq(e1RedX3 -shotX3)+sq(e1RedY3 -shotY3)); 
+
+	d13 = (int)sqrt(sq(e1RedX-shotX4)+sq(e1RedY-shotY4));
+
+	d14 = (int)sqrt(sq(whiteEnemyX + 40-shotX4)+sq(e1RedY2 + 20-shotY4));
+
+	d15 = (int)sqrt(sq(e1RedX3 -shotX4)+sq(e1RedY3 -shotY4)); 
+
+	d16 = (int)sqrt(sq(e1RedX-shotX5)+sq(e1RedY-shotY5));
+
+	d17 = (int)sqrt(sq(whiteEnemyX + 40-shotX5)+sq(e1RedY2 + 20-shotY5));
+
+	d18 = (int)sqrt(sq(e1RedX3 -shotX5)+sq(e1RedY3 -shotY5)); 
+
+// Enemy numberDestroyed counter
+
+    fill(0,255,0);
+    text(numberDestroyed,580,30);
+    
+// Respawn of enemy1 after being destroyed... Randomized.
+   if (d <= 70 && shotY <= characterY - 20)
+   {
+   		e1RedX = random(50,400) + random(50,100);
+   		e1RedY = -400;
+   		shotPosition = 0;
+   		numberDestroyed = numberDestroyed + 1;
+   		explodeX = shotX;
+		explodeY = shotY;
+		exploding = 1;
+   	}
+
+   if (d7 <= 70 && shotY2 <= characterY - 20)
+   {
+   		e1RedX = random(50,400) + random(50,100);
+   		e1RedY = -400;
+   		shotPosition2 = 0;
+   		numberDestroyed = numberDestroyed + 1;
+   		explodeX = shotX2;
+		explodeY = shotY2;
+		exploding = 1;
+   	}
+
+   if (d10 <= 70 && shotY3 <= characterY - 20)
+   {
+   		e1RedX = random(50,400) + random(50,100);
+   		e1RedY = -400;
+   		shotPosition3 = 0;
+   		numberDestroyed = numberDestroyed + 1;
+   		explodeX = shotX3;
+		explodeY = shotY3;
+		exploding = 1;
+   	}
+
+   if (d13 <= 70 && shotY4 <= characterY - 20)
+   {
+   		e1RedX = random(50,400) + random(50,100);
+   		e1RedY = -400;
+   		shotPosition4 = 0;
+   		numberDestroyed = numberDestroyed + 1;
+   		explodeX = shotX4;
+		explodeY = shotY4;
+		exploding = 1;
+   	}
+
+   	   if (d16 <= 70 && shotY5 <= characterY - 20)
+   {
+   		e1RedX = random(50,400) + random(50,100);
+   		e1RedY = -400;
+   		shotPosition5 = 0;
+   		numberDestroyed = numberDestroyed + 1;
+   		explodeX = shotX5;
+		explodeY = shotY5;
+		exploding = 1;
+   	}
+
+   if (d5 <= 70 && shotY <= characterY - 20)
+   {
+   		e1RedX3 = random(50,400) + random(50,100);
+   		e1RedY3 = -400;
+   		shotPosition = 0;
+   		numberDestroyed = numberDestroyed + 1;
+   		explodeX3 = shotX;
+		explodeY3 = shotY;
+		exploding3 = 1;
+   	}
+   	   if (d9 <= 70 && shotY2 <= characterY - 20)
+   {
+   		e1RedX3 = random(50,400) + random(50,100);
+   		e1RedY3 = -400;
+   		shotPosition2 = 0;
+   		numberDestroyed = numberDestroyed + 1;
+   		explodeX3 = shotX2;
+		explodeY3 = shotY2;
+		exploding3 = 1;
+   	}
+
+   	   	 if (d12 <= 70 && shotY3 <= characterY - 20)
+   {
+   		e1RedX3 = random(50,400) + random(50,100);
+   		e1RedY3 = -400;
+   		shotPosition3 = 0;
+   		numberDestroyed = numberDestroyed + 1;
+   		explodeX3 = shotX3;
+		explodeY3 = shotY3;
+		exploding3 = 1;
+   	}
+
+   	   	 if (d15 <= 70 && shotY4 <= characterY - 20)
+   {
+   		e1RedX3 = random(50,400) + random(50,100);
+   		e1RedY3 = -400;
+   		shotPosition4 = 0;
+   		numberDestroyed = numberDestroyed + 1;
+   		explodeX3 = shotX4;
+		explodeY3 = shotY4;
+		exploding3 = 1;
+   	}
+   	   	 if (d18 <= 70 && shotY5 <= characterY - 20)
+   {
+   		e1RedX3 = random(50,400) + random(50,100);
+   		e1RedY3 = -400;
+   		shotPosition5 = 0;
+   		numberDestroyed = numberDestroyed + 1;
+   		explodeX3 = shotX5;
+		explodeY3 = shotY5;
+		exploding3 = 1;
+   	}
+//speeeeeeeed///
+if (numberDestroyed == 5)
+	{
+	enemy1speed = 7;
+	enemy2speed = 7;
+	enemy3speed = 7;
+	}
+
+if (numberDestroyed == 10)
+	{
+	enemy1speed = 9;
+	enemy2speed = 9;
+	enemy3speed = 9;
+	}
+
+if (numberDestroyed == 15)
+	{
+	enemy1speed = 11;
+	enemy2speed = 11;
+	enemy3speed = 11;
+	}
+
+if (numberDestroyed == 20)
+	{
+	enemy1speed = 13;
+	enemy2speed = 13;
+	enemy3speed = 13;
+	}
+
+/// Explosion ///
+	if(exploding == 1)
+	{
+		explodeXsize = explodeXsize + 1;
+		explodeYsize = explodeYsize + 1;
+		soundManager.play('s2');
+	}
+
+	if (exploding == 0)
+	{
+		explodeX = -201;
+		explodeY = -301;
+		explodeXsize = 150;
+		explodeYsize = 170;
+	}
+	if(exploding2 == 1)
+	{
+		explodeXsize2 = explodeXsize2 + 1;
+		explodeYsize2 = explodeYsize2 + 1;
+			soundManager.play('s2');
+	}
+	if (exploding2 == 0)
+	{
+		explodeX2 = -201;
+		explodeY2 = -301;
+		explodeXsize2 = 150;
+		explodeYsize2 = 170;
+	}
+
+   		if(exploding3 == 1)
+	{
+		explodeXsize3 = explodeXsize3 + 1;
+		explodeYsize3 = explodeYsize3 + 1;
+		soundManager.play('s2');
+	}
+	if (exploding3 == 0)
+	{
+		explodeX3 = -201;
+		explodeY3 = -301;
+		explodeXsize3 = 150;
+		explodeYsize3 = 170;
+	}
+
+	   if(exploding4 == 1)
+	{
+		explodeXsize4 = explodeXsize4 + 1;
+		explodeYsize4 = explodeYsize4 + 1;
+		soundManager.play('s2');
+	}
+	if (exploding4 == 2)
+	{
+		link("over.html");
+	}
+
+	   if(exploding5 == 1)
+	{
+		explodeXsize5 = explodeXsize5 + 1;
+		explodeYsize5 = explodeYsize5 + 1;
+		soundManager.play('s2');
+	}
+	if (exploding5 == 2)
+	{
+		link("over.html");
+	}
+
+		   if(exploding6 == 1)
+	{
+		explodeXsize6 = explodeXsize6 + 1;
+		explodeYsize6 = explodeYsize6 + 1;
+		soundManager.play('s2');
+	}
+	if (exploding6 == 2)
+	{
+		link("over.html");
+	}
+
+		if(explodeXsize == 155 && explodeYsize == 175)
+	{
+		exploding = 0;
+	}
+		if(explodeXsize2 == 155 && explodeYsize2 == 175)
+	{
+		exploding2 = 0;
+	}
+		if(explodeXsize3 == 155 && explodeYsize3 == 175)
+	{
+		exploding3 = 0;
+	}
+		if(explodeXsize4 == 155 && explodeYsize4 == 175)
+	{
+		exploding4 = 2;
+	}
+
+		if(explodeXsize5 == 155 && explodeYsize5 == 175)
+	{
+		exploding5 = 2;
+	}
+			if(explodeXsize6 == 155 && explodeYsize6 == 175)
+	{
+		exploding6 = 2;
+	}
+
+   	   if (d2 <= 55 && shotY <= characterY - 20 && shotPosition == 1)
+   {
+   		whiteEnemyX = random(100,350) + random(50,100);
+   		e1RedY2 = -200;
+   		shotPosition = 0;
+   		numberDestroyed = numberDestroyed + 1;
+   		explodeX2 = shotX;
+		explodeY2 = shotY;
+		exploding2 = 1;
+   	}
+   	   	   if (d8 <= 55 && shotY2 <= characterY - 20 && shotPosition2 == 1)
+   {
+   		whiteEnemyX = random(100,350) + random(50,100);
+   		e1RedY2 = -200;
+   		shotPosition2 = 0;
+   		numberDestroyed = numberDestroyed + 1;
+   		explodeX2 = shotX2;
+		explodeY2 = shotY2;
+		exploding2 = 1;
+   	}
+
+   	if (d11 <= 55 && shotY3 <= characterY - 20 && shotPosition3 == 1)
+   {
+   		whiteEnemyX = random(100,350) + random(50,100);
+   		e1RedY2 = -200;
+   		shotPosition3 = 0;
+   		numberDestroyed = numberDestroyed + 1;
+   		explodeX2 = shotX3;
+		explodeY2 = shotY3;
+		exploding2 = 1;
+   	}
+   	   	if (d14 <= 55 && shotY4 <= characterY - 20 && shotPosition4 == 1)
+   {
+   		whiteEnemyX = random(100,350) + random(50,100);
+   		e1RedY2 = -200;
+   		shotPosition4 = 0;
+   		numberDestroyed = numberDestroyed + 1;
+   		explodeX2 = shotX4;
+		explodeY2 = shotY4;
+		exploding2 = 1;
+   	}
+   	   	if (d17 <= 55 && shotY5 <= characterY - 20 && shotPosition5 == 1)
+   {
+   		whiteEnemyX = random(100,350) + random(50,100);
+   		e1RedY2 = -200;
+   		shotPosition5 = 0;
+   		numberDestroyed = numberDestroyed + 1;
+   		explodeX2 = shotX5;
+		explodeY2 = shotY5;
+		exploding2 = 1;
+   	}
+   	/// GAME OVER CODE
+   		if (d3 <= 70)
+
+   		{
+			exploding4 = 1;
+			explodeX4 = characterX;
+			explodeY4 = characterY;
+			characterX = -300;
+			characterY = -1000;
+   		}
+
+   		if (d4 <= 70)
+   		{
+			exploding5 = 1;
+			explodeX5 = characterX;
+			explodeY5 = characterY;
+			characterX = -300;
+			characterY = -1000;
+   		}
+
+   		if (d6 <= 70)
+   		{
+			exploding5 = 1;
+			explodeX5 = characterX;
+			explodeY5 = characterY;
+			characterX = -300;
+			characterY = -1000;
+   		}
+
+  		if (e1RedY > 600)
+  		{
+  			link("over.html");
+  		}
+
+  		if (e1RedY2 > 700)
+  		{
+  			link("over.html");
+  		}
+
+  		if (e1RedY3 > 600)
+  		{
+  			link("over.html");
+  		}
+
+	// wallpaper galaxy moving 
+	if (turn == 1)
+	{
+		firstgalaxypictureY = firstgalaxypictureY - 2;
+		secondGalaxyPictureY = secondGalaxyPictureY -2;
+	}
+
+	if (firstgalaxypictureY == -800)
+	{
+		firstgalaxypictureY = 0;
+	}
+
+	if (secondGalaxyPictureY == 0)
+	{
+		secondGalaxyPictureY = 800;
+	}
+
+	if (firstgalaxypictureY == 0 && secondGalaxyPictureY == 800)
+	{
+		turn = 1;
+	}
+	
+//boundary setting 
+	if (characterX > 490)
+	{
+		moveRight = 0;
+	
+	}
+
+	if (characterX < 10)
+	{
+		moveLeft = 0;
+	}
+
+
+	if (characterY < 10)
+	{
+		moveUp = 0;
+	}
+
+	if (characterY > 640)
+	{
+		moveDown = 0;
+	}
+
+	//movement control
+	
+	if (moveRight == 1)
+	{
+		characterX =characterX + characterspeed;
+	}
+
+	if (moveLeft == 1)
+	{
+		characterX =characterX - characterspeed;
+	}
+
+	if (moveUp == 1)
+	{
+		characterY =characterY - characterspeed;
+	}
+
+	if (moveDown == 1)
+	{
+		characterY =characterY + characterspeed;
+	}
+	
+	//shooting control
+
+	if (shotY < 0)
+	{
+		shotPosition = 0
+	}
+	
+	if (shotPosition == 0)
+	{
+		shotX = characterX + 26;
+		shotY = characterY - 10;
+	}
+	
+	if (shotPosition == 1)
+	{
+		image(shot,shotX,shotY,40,40);
+		shotY = shotY - 30;
+	}
+		if (shotY2 < 0)
+	{
+		shotPosition2 = 0
+	}
+	
+	if (shotPosition2 == 0)
+	{
+		shotX2 = characterX + 27;
+		shotY2 = characterY - 11;
+	}
+	
+	if (shotPosition2 == 1)
+	{
+		image(shot2,shotX2,shotY2,40,40);
+		shotY2 = shotY2 - 30;
+	}
+
+		if (shotY3 < 0)
+	{
+		shotPosition3 = 0
+	}
+	
+	if (shotPosition3 == 0)
+	{
+		shotX3 = characterX + 27;
+		shotY3 = characterY - 11;
+	}
+	
+	if (shotPosition3 == 1)
+	{
+		image(shot3,shotX3,shotY3,40,40);
+		shotY3 = shotY3 - 30;
+	}
+
+
+		if (shotY4 < 0)
+	{
+		shotPosition4 = 0
+	}
+	
+	if (shotPosition4 == 0)
+	{
+		shotX4 = characterX + 27;
+		shotY4 = characterY - 11;
+	}
+	
+	if (shotPosition4 == 1)
+	{
+		image(shot4,shotX4,shotY4,40,40);
+		shotY4 = shotY4 - 30;
+	}
+
+			if (shotY5 < 0)
+	{
+		shotPosition5 = 0
+	}
+	
+	if (shotPosition5 == 0)
+	{
+		shotX5 = characterX + 27;
+		shotY5 = characterY - 11;
+	}
+	
+	if (shotPosition5 == 1)
+	{
+		image(shot5,shotX5,shotY5,40,40);
+		shotY5 = shotY5 - 30;
+	}
+
+
+}
+void keyPressed()
+{
+
+if(key == ' ' && shotPosition == 0)
+	{
+			shotPosition = 1;	
+			soundManager.play('s1');
+	}
+
+if(key == ' ' && shotPosition == 1 && shotPosition2 == 0)
+	{
+			shotPosition2 = 1;	
+			soundManager.play('s1');
+			shotPosition = 0;	
+	}
+
+if(key == ' ' && shotPosition2 == 1 && shotPosition3 == 0)
+	{
+			shotPosition3 = 1;	
+			soundManager.play('s1');
+			shotPosition2 = 0;	
+	}
+
+	if(key == ' ' && shotPosition3 == 1 && shotPosition4 == 0)
+	{
+			shotPosition4 = 1;	
+			soundManager.play('s1');
+			shotPosition3 = 0;	
+	}
+
+	if(key == ' ' && shotPosition4 == 1 && shotPosition5 == 0)
+	{
+			shotPosition5 = 1;	
+			soundManager.play('s1');
+			shotPosition4 = 0;	
+	}
+
+	if (key == CODED)
+{
+		 if(keyCode == RIGHT)
+	{
+			moveRight = 1;
+	}
+}
+
+if (key == CODED)
+{
+		if (keyCode == LEFT)
+	{
+		moveLeft = 1;
+	}
+}
+
+if (key == CODED)
+{
+		if (keyCode == UP)
+	{
+		moveUp = 1;
+	}
+}
+
+if (key == CODED)
+{
+		if (keyCode == DOWN)
+	{
+		moveDown = 1;
+	}
+}
+
+//shooting 
+
+		
+}
+	
+void keyReleased()
+{
+	if (key == CODED)
+{
+		 if(keyCode == RIGHT)
+	{
+			moveRight = 0;
+	}
+}
+
+if (key == CODED)
+{
+		if (keyCode == LEFT)
+	{
+		moveLeft = 0;
+	}
+}
+
+if (key == CODED)
+{
+
+		if (keyCode == UP)
+	{
+		moveUp = 0;
+	}
+}
+
+if (key == CODED)
+{
+		if (keyCode == DOWN)
+	{
+		moveDown = 0;
+	}
+}
+
+}
+
+</script>
+<canvas id="mycanvas"></canvas>
+</head>
+
+<body>
+
+</body>
+</html>
